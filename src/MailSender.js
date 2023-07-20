@@ -1,18 +1,18 @@
-const nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer')
 
 class MailSender {
-  constructor() {
+  constructor () {
     this._transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: process.env.SMTP_PORT,
+      host: process.env.MAIL_HOST,
+      port: process.env.MAIL_PORT,
       auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASSWORD,
-      },
-    });
+        user: process.env.MAIL_ADDRESS,
+        pass: process.env.MAIL_PASSWORD
+      }
+    })
   }
 
-  sendEmail(targetEmail, content) {
+  sendEmail (targetEmail, content) {
     const message = {
       from: 'Playlist Apps',
       to: targetEmail,
@@ -21,12 +21,12 @@ class MailSender {
       attachments: [
         {
           filename: 'playlists.json',
-          content,
-        },
-      ],
-    };
-    return this._transporter.sendMail(message);
+          content
+        }
+      ]
+    }
+    return this._transporter.sendMail(message)
   }
 }
 
-module.exports = MailSender;
+module.exports = MailSender
